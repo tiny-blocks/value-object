@@ -10,7 +10,7 @@ trait ValueObjectAdapter
 {
     public function values(): array
     {
-        return get_object_vars($this);
+        return get_object_vars(object: $this);
     }
 
     public function equals(ValueObject $other): bool

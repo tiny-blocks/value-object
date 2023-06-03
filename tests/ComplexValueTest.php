@@ -74,7 +74,7 @@ final class ComplexValueTest extends TestCase
     public function testInvalidProperty(): void
     {
         $this->expectException(InvalidProperty::class);
-        $this->expectErrorMessage('Invalid property <other> for class <TinyBlocks\Vo\Mock\ComplexValueMock>.');
+        $this->expectExceptionMessage('Invalid property <other> for class <TinyBlocks\Vo\Mock\ComplexValueMock>.');
 
         $complex = new ComplexValueMock(
             single: new SingleValueMock(id: 1000),
@@ -86,13 +86,15 @@ final class ComplexValueTest extends TestCase
                 ]
             )
         );
-        $complex->__get('other');
+        $complex->__get(key: 'other');
     }
 
     public function testPropertyCannotBeChanged(): void
     {
         $this->expectException(PropertyCannotBeChanged::class);
-        $this->expectErrorMessage('Property <other> cannot be changed in class <TinyBlocks\Vo\Mock\ComplexValueMock>.');
+        $this->expectExceptionMessage(
+            'Property <other> cannot be changed in class <TinyBlocks\Vo\Mock\ComplexValueMock>.'
+        );
 
         $complex = new ComplexValueMock(
             single: new SingleValueMock(id: 1000),
@@ -104,13 +106,13 @@ final class ComplexValueTest extends TestCase
                 ]
             )
         );
-        $complex->__set('other', new StdClass());
+        $complex->__set(key: 'other', value: new StdClass());
     }
 
     public function testPropertyCannotBeDeactivated(): void
     {
         $this->expectException(PropertyCannotBeDeactivated::class);
-        $this->expectErrorMessage(
+        $this->expectExceptionMessage(
             'Property <other> cannot be deactivated in class <TinyBlocks\Vo\Mock\ComplexValueMock>.'
         );
 
@@ -124,6 +126,6 @@ final class ComplexValueTest extends TestCase
                 ]
             )
         );
-        $complex->__unset('other');
+        $complex->__unset(key: 'other');
     }
 }

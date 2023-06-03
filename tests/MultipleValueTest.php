@@ -60,7 +60,7 @@ final class MultipleValueTest extends TestCase
     public function testInvalidProperty(): void
     {
         $this->expectException(InvalidProperty::class);
-        $this->expectErrorMessage('Invalid property <other> for class <TinyBlocks\Vo\Mock\MultipleValueMock>.');
+        $this->expectExceptionMessage('Invalid property <other> for class <TinyBlocks\Vo\Mock\MultipleValueMock>.');
 
         $multiple = new MultipleValueMock(
             id: 123,
@@ -69,13 +69,13 @@ final class MultipleValueTest extends TestCase
                 new TransactionMock(id: 200, amount: new AmountMock(value: 11.01, currency: 'BRL'))
             ]
         );
-        $multiple->__get('other');
+        $multiple->__get(key: 'other');
     }
 
     public function testPropertyCannotBeChanged(): void
     {
         $this->expectException(PropertyCannotBeChanged::class);
-        $this->expectErrorMessage(
+        $this->expectExceptionMessage(
             'Property <other> cannot be changed in class <TinyBlocks\Vo\Mock\MultipleValueMock>.'
         );
 
@@ -86,13 +86,13 @@ final class MultipleValueTest extends TestCase
                 new TransactionMock(id: 200, amount: new AmountMock(value: 11.01, currency: 'BRL'))
             ]
         );
-        $multiple->__set('other', new StdClass());
+        $multiple->__set(key: 'other', value: new StdClass());
     }
 
     public function testPropertyCannotBeDeactivated(): void
     {
         $this->expectException(PropertyCannotBeDeactivated::class);
-        $this->expectErrorMessage(
+        $this->expectExceptionMessage(
             'Property <other> cannot be deactivated in class <TinyBlocks\Vo\Mock\MultipleValueMock>.'
         );
 
@@ -103,6 +103,6 @@ final class MultipleValueTest extends TestCase
                 new TransactionMock(id: 200, amount: new AmountMock(value: 11.01, currency: 'BRL'))
             ]
         );
-        $multiple->__unset('other');
+        $multiple->__unset(key: 'other');
     }
 }

@@ -34,32 +34,34 @@ final class SingleValueTest extends TestCase
     public function testInvalidProperty(): void
     {
         $this->expectException(InvalidProperty::class);
-        $this->expectErrorMessage('Invalid property <other> for class <TinyBlocks\Vo\Mock\SingleValueMock>.');
+        $this->expectExceptionMessage('Invalid property <other> for class <TinyBlocks\Vo\Mock\SingleValueMock>.');
 
         $single = new SingleValueMock(id: 1);
 
-        $single->__get('other');
+        $single->__get(key: 'other');
     }
 
     public function testPropertyCannotBeChanged(): void
     {
         $this->expectException(PropertyCannotBeChanged::class);
-        $this->expectErrorMessage('Property <other> cannot be changed in class <TinyBlocks\Vo\Mock\SingleValueMock>.');
+        $this->expectExceptionMessage(
+            'Property <other> cannot be changed in class <TinyBlocks\Vo\Mock\SingleValueMock>.'
+        );
 
         $single = new SingleValueMock(id: 1);
 
-        $single->__set('other', new StdClass());
+        $single->__set(key: 'other', value: new StdClass());
     }
 
     public function testPropertyCannotBeDeactivated(): void
     {
         $this->expectException(PropertyCannotBeDeactivated::class);
-        $this->expectErrorMessage(
+        $this->expectExceptionMessage(
             'Property <other> cannot be deactivated in class <TinyBlocks\Vo\Mock\SingleValueMock>.'
         );
 
         $single = new SingleValueMock(id: 1);
 
-        $single->__unset('other');
+        $single->__unset(key: 'other');
     }
 }

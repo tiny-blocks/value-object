@@ -8,23 +8,9 @@ permissions:
   contents: read
 
 jobs:
-  get-php-version:
-    name: Get PHP Version
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Check PHP Version
-        id: php-version
-        run: echo "::set-output name=php_version::$(php -r 'echo PHP_VERSION_ID;')"
-
   auto-review:
     name: Auto review
-    needs: get-php-version
     runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        php-version: [ ${ { needs.get-php-version.outputs.php_version } } ]
 
     steps:
       - name: Checkout
@@ -32,11 +18,6 @@ jobs:
 
       - name: Install dependencies
         run: composer update --no-progress --optimize-autoloader
-
-      - name: Set up PHP ${{ matrix.php-version }}
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: ${{ matrix.php-version }}
 
       - name: Run phpcs
         run: composer phpcs
@@ -46,12 +27,7 @@ jobs:
 
   tests:
     name: Tests
-    needs: get-php-version
     runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        php-version: [ ${ { needs.get-php-version.outputs.php_version } } ]
 
     steps:
       - name: Checkout
@@ -59,11 +35,6 @@ jobs:
 
       - name: Install dependencies
         run: composer update --no-progress --optimize-autoloader
-
-      - name: Set up PHP ${{ matrix.php-version }}
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: ${{ matrix.php-version }}
 
       - name: Run unit tests
         env:

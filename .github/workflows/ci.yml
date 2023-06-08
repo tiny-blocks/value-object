@@ -8,13 +8,23 @@ permissions:
   contents: read
 
 jobs:
+  get-php-version:
+    name: Get PHP Version
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check PHP Version
+        id: php-version
+        run: echo "::set-output name=php_version::$(php -r 'echo PHP_VERSION_ID;')"
+
   auto-review:
     name: Auto review
+    needs: get-php-version
     runs-on: ubuntu-latest
 
     strategy:
       matrix:
-        php-version: [ 8.2 ]
+        php-version: [ ${ { needs.get-php-version.outputs.php_version } } ]
 
     steps:
       - name: Checkout
@@ -36,11 +46,12 @@ jobs:
 
   tests:
     name: Tests
+    needs: get-php-version
     runs-on: ubuntu-latest
 
     strategy:
       matrix:
-        php-version: [ 8.2 ]
+        php-version: [ ${ { needs.get-php-version.outputs.php_version } } ]
 
     steps:
       - name: Checkout

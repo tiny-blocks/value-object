@@ -70,6 +70,8 @@ $otherTransactionId = new TransactionId(value: 'e6e2442f-3bd8-421f-9ac2-f9e26ac4
 $transactionId->equals(other: $otherTransactionId); # 1 (true)
 ```
 
+<div id='license'></div>
+
 ## License
 
 Value Object is licensed under [MIT](LICENSE).

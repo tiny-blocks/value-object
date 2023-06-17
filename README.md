@@ -67,12 +67,12 @@ The `equals` method compares the value of two VOs, and checks if they are equal.
 $transactionId = new TransactionId(value: 'e6e2442f-3bd8-421f-9ac2-f9e26ac4abd2');
 $otherTransactionId = new TransactionId(value: 'e6e2442f-3bd8-421f-9ac2-f9e26ac4abd2');
 
-echo $transactionId->equals(other: $otherTransactionId); # 1 (true)
+$transactionId->equals(other: $otherTransactionId); # 1 (true)
 ```
 
 ## License
 
-Math is licensed under [MIT](/LICENSE).
+Value Object is licensed under [MIT](LICENSE).
 
 <div id='contributing'></div>
 

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace TinyBlocks\Vo\Internal\Exceptions;
 
 use RuntimeException;

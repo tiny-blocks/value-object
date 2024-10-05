@@ -39,7 +39,8 @@
         }
     },
     "require": {
-        "php": "^8.2"
+        "php": "^8.2",
+        "tiny-blocks/immutable-object": "^1"
     },
     "require-dev": {
         "phpmd/phpmd": "^2.15",
@@ -68,6 +69,9 @@
         "tests-no-coverage": [
             "@test-no-coverage",
             "@test-mutation-no-coverage"
+        ],
+        "tests-file-no-coverage": [
+            "@test-no-coverage"
         ]
     }
 }

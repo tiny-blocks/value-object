@@ -47,11 +47,11 @@ With the implementation of the `ValueObject` interface, and the `ValueObjectAdap
 namespace Example;
 
 use TinyBlocks\Vo\ValueObject;
-use TinyBlocks\Vo\ValueObjectAdapter;
+use TinyBlocks\Vo\ValueObjectBehavior;
 
 final class TransactionId implements ValueObject
 {
-    use ValueObjectAdapter;
+    use ValueObjectBehavior;
 
     public function __construct(private readonly string $value)
     {
@@ -67,7 +67,7 @@ The `equals` method compares the value of two VOs, and checks if they are equal.
 $transactionId = new TransactionId(value: 'e6e2442f-3bd8-421f-9ac2-f9e26ac4abd2');
 $otherTransactionId = new TransactionId(value: 'e6e2442f-3bd8-421f-9ac2-f9e26ac4abd2');
 
-$transactionId->equals(other: $otherTransactionId); # 1 (true)
+$transactionId->equals(other: $otherTransactionId); # true
 ```
 
 <div id='license'></div>

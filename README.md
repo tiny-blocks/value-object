@@ -17,11 +17,6 @@ A **V**alue **O**bject (**VO**) is a type that is distinguishable only by the st
 entity, which has a unique identifier and remains distinct even if its properties are identical, VOs with the same
 properties are considered equal.
 
-Immutability is an expectation for VOs, not a contract enforced by this interface. The recommended way to enforce
-it is to declare implementing classes as `final readonly class`, which PHP enforces at the language level. If you
-need runtime enforcement (e.g., for classes that cannot be `readonly`), you can explicitly compose
-`TinyBlocks\Immutable\Immutable` alongside `ValueObject`.
-
 More details about [VOs](https://martinfowler.com/bliki/ValueObject.html).
 
 <div id='installation'></div>
@@ -63,7 +58,7 @@ final readonly class TransactionId implements ValueObject
 
 ### Using the equals method
 
-The `equals` method compares the value of two VOs and checks if they are equal.
+The `equals` method compares two VOs by class and property values, returning `true` when both match.
 
 ```php
 $transactionId = new TransactionId(value: 'e6e2442f-3bd8-421f-9ac2-f9e26ac4abd2');
@@ -72,42 +67,39 @@ $otherTransactionId = new TransactionId(value: 'e6e2442f-3bd8-421f-9ac2-f9e26ac4
 $transactionId->equals(other: $otherTransactionId); # true
 ```
 
-### Composing with runtime immutability enforcement
-
-If your VO cannot be `readonly` (e.g., it extends a mutable base class), combine both interfaces explicitly:
+Equality is strict: two VOs of different classes with the same property values are **not** considered equal, even
+when their shapes match.
 
 ```php
-<?php
-
-namespace Example;
-
-use TinyBlocks\Immutable\Immutable;
-use TinyBlocks\Immutable\Immutability;
-use TinyBlocks\Vo\ValueObject;
-use TinyBlocks\Vo\ValueObjectBehavior;
-
-final class LegacyAmount implements ValueObject, Immutable
+final readonly class OrderId implements ValueObject
 {
     use ValueObjectBehavior;
-    use Immutability;
 
-    public function __construct(private readonly float $value)
+    public function __construct(private string $value)
     {
     }
 }
+
+$transactionId = new TransactionId(value: 'e6e2442f-3bd8-421f-9ac2-f9e26ac4abd2');
+$orderId = new OrderId(value: 'e6e2442f-3bd8-421f-9ac2-f9e26ac4abd2');
+
+$transactionId->equals(other: $orderId); # false
 ```
 
 <div id='faq'></div>
 
 ## FAQ
 
-### 01. Why does `ValueObject` no longer extend `Immutable`?
+### 01. Why does `final readonly class` matter?
 
-Prior to version 4.0, `ValueObject` extended `TinyBlocks\Immutable\Immutable`, forcing every VO to carry
-`__set`, `__unset`, `offsetSet`, and `offsetUnset` guards even when they were not needed. Since `final readonly
-class` enforces immutability at the language level for the vast majority of VOs, the runtime enforcement became
-unnecessary overhead and an unwanted coupling. Consumers that need runtime enforcement can compose both interfaces
-explicitly, as shown in the example above.
+Declaring a VO as `final readonly class` makes immutability a language-level guarantee: the PHP runtime rejects
+any attempt to mutate properties after construction, without requiring additional runtime checks. This is the
+recommended form for all new VOs.
+
+### 02. How is equality determined?
+
+Two VOs are considered equal when they are instances of the same class and all their properties have the same
+values, compared strictly. Different classes are never equal, even when their property shapes match.
 
 <div id='license'></div>
 

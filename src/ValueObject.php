@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace TinyBlocks\Vo;
 
-use TinyBlocks\Immutable\Immutable;
-
 /**
  * A Value Object is an immutable type that is only distinguishable by the state of its properties, that is,
  * unlike an entity, which has a unique identifier and remains distinct even if its properties are
@@ -13,7 +11,7 @@ use TinyBlocks\Immutable\Immutable;
  *
  * @see http://martinfowler.com/bliki/ValueObject.html
  */
-interface ValueObject extends Immutable
+interface ValueObject
 {
     /**
      * Compares this ValueObject with another to determine if they are equal.

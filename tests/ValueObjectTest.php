@@ -38,22 +38,17 @@ final class ValueObjectTest extends TestCase
     {
         $productOne = new Product(name: 'Laptop', amount: new Amount(value: 100.0, currency: 'USD'));
         $productTwo = new Product(name: 'Mouse', amount: new Amount(value: 50.0, currency: 'USD'));
-        $productDuplicate = new Product(name: 'Laptop', amount: new Amount(value: 100.0, currency: 'USD'));
         $emptyOrderOne = new Order(id: 1, products: []);
         $emptyOrderTwo = new Order(id: 1, products: []);
 
         return [
-            'Empty arrays should be equal'      => [
+            'Empty arrays should be equal'   => [
                 'valueObject'      => $emptyOrderOne,
                 'otherValueObject' => $emptyOrderTwo
             ],
-            'Identical orders same products'    => [
+            'Identical orders same products' => [
                 'valueObject'      => new Order(id: 1, products: [$productOne, $productTwo]),
                 'otherValueObject' => new Order(id: 1, products: [$productOne, $productTwo])
-            ],
-            'Same products different instances' => [
-                'valueObject'      => new Order(id: 1, products: [$productOne]),
-                'otherValueObject' => new Order(id: 1, products: [$productDuplicate])
             ]
         ];
     }

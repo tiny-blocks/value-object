@@ -1,8 +1,18 @@
 parameters:
-  paths:
-    - src
-  level: 9
-  tmpDir: report/phpstan
-  ignoreErrors:
-    - '#is used zero times and is not analysed#'
-  reportUnmatchedIgnoredErrors: false
+    level: max
+    paths:
+        - src
+        - tests
+    ignoreErrors:
+        # Order fixture stores arbitrary arrays for structural-equality tests.
+        - identifier: missingType.iterableValue
+          path: tests/Models/Order.php
+
+        # Internal array-equality collaborator accepts arrays with arbitrary value types by design.
+        - identifier: missingType.iterableValue
+          path: src/Internal/ArrayEquality.php
+
+        # Internal array-hash collaborator accepts arrays with arbitrary value types by design.
+        - identifier: missingType.iterableValue
+          path: src/Internal/ArrayHash.php
+    reportUnmatchedIgnoredErrors: true

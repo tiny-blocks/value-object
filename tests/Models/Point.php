@@ -7,11 +7,11 @@ namespace TinyBlocks\Vo\Models;
 use TinyBlocks\Vo\ValueObject;
 use TinyBlocks\Vo\ValueObjectBehavior;
 
-final readonly class Order implements ValueObject
+final readonly class Point implements ValueObject
 {
     use ValueObjectBehavior;
 
-    public function __construct(public array $items, public int $number)
+    public function __construct(public float $latitude, public float $longitude)
     {
     }
 }

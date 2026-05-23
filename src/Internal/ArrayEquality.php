@@ -14,7 +14,7 @@ final readonly class ArrayEquality
 
         return array_all(
             $left,
-            fn($element, $key) => StructuralEquality::areEqual(
+            fn(mixed $element, int|string $key): bool => StructuralEquality::areEqual(
                 left: $element,
                 right: $right[$key]
             )

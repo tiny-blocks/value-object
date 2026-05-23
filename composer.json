@@ -27,8 +27,8 @@
         "php": "^8.5"
     },
     "require-dev": {
-        "ergebnis/composer-normalize": "^2.51",
-        "infection/infection": "^0.32",
+        "ergebnis/composer-normalize": "^2.52",
+        "infection/infection": "^0.33",
         "phpstan/phpstan": "^2.1",
         "phpunit/phpunit": "^13.1",
         "squizlabs/php_codesniffer": "^4.0"

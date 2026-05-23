@@ -11,9 +11,12 @@ final readonly class ArrayHash
         $serialized = '[';
 
         foreach ($subject as $key => $element) {
-            $serialized = sprintf('%s%s=%s;', $serialized, $key, StructuralHash::hash(subject: $element));
+            $template = '%s%s=%s;';
+            $serialized = sprintf($template, $serialized, $key, StructuralHash::hash(subject: $element));
         }
 
-        return sprintf('%s]', $serialized);
+        $template = '%s]';
+
+        return sprintf($template, $serialized);
     }
 }

@@ -12,8 +12,9 @@ final readonly class ValueObjectHash
     {
         $serialized = $subject::class;
 
-        foreach (get_object_vars($subject) as $name => $element) {
-            $serialized = sprintf('%s|%s=%s', $serialized, $name, StructuralHash::hash(subject: $element));
+        foreach (ObjectProperties::extract(subject: $subject) as $name => $element) {
+            $template = '%s|%s=%s';
+            $serialized = sprintf($template, $serialized, $name, StructuralHash::hash(subject: $element));
         }
 
         return hash('xxh128', $serialized);

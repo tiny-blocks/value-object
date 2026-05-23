@@ -15,4 +15,16 @@ parameters:
         # Internal array-hash collaborator accepts arrays with arbitrary value types by design.
         - identifier: missingType.iterableValue
           path: src/Internal/ArrayHash.php
+
+        # Internal property extractor returns an untyped array by design; PHPDoc is prohibited in Internal/.
+        - identifier: missingType.iterableValue
+          path: src/Internal/ObjectProperties.php
+
+        # Private properties are read via reflection; PHPStan cannot trace reflection-based access.
+        - identifier: property.onlyWritten
+          path: tests/Models/PrivateMoney.php
+
+        # Private property is read via reflection; PHPStan cannot trace reflection-based access.
+        - identifier: property.onlyWritten
+          path: tests/Models/MixedVisibilityProfile.php
     reportUnmatchedIgnoredErrors: true

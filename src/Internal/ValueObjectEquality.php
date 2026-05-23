@@ -14,11 +14,14 @@ final readonly class ValueObjectEquality
             return false;
         }
 
-        $rightProperties = get_object_vars($right);
+        $rightProperties = ObjectProperties::extract(subject: $right);
 
         return array_all(
-            get_object_vars($left),
-            fn($element, $name) => StructuralEquality::areEqual(left: $element, right: $rightProperties[$name])
+            ObjectProperties::extract(subject: $left),
+            fn(mixed $element, string $name): bool => StructuralEquality::areEqual(
+                left: $element,
+                right: $rightProperties[$name]
+            )
         );
     }
 }
